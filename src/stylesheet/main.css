@@ -1,0 +1,10 @@
+@import "./libs/normalize.css";
+@import "./vars.css";
+
+html {
+  box-sizing: border-box;
+}
+
+p {
+  --main-color: pink;
+}
