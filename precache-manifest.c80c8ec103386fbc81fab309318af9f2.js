@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "61ffd52c3a48d60870a4b8c5a75fe296",
+    "revision": "d6c01a2188e65da80567c41b147def65",
     "url": "/norris-jokes/index.html"
   },
   {
-    "revision": "a2e94108a45f27a6952d",
-    "url": "/norris-jokes/static/css/main.88b817e5.chunk.css"
+    "revision": "3037271131b8253ee56a",
+    "url": "/norris-jokes/static/css/main.8d2547b8.chunk.css"
   },
   {
-    "revision": "5cde9fa810be13e8793a",
-    "url": "/norris-jokes/static/js/2.c6940d42.chunk.js"
+    "revision": "0e845800cb85eabf8f90",
+    "url": "/norris-jokes/static/js/2.3666e6f0.chunk.js"
   },
   {
     "revision": "e88a3e95b5364d46e95b35ae8c0dc27d",
-    "url": "/norris-jokes/static/js/2.c6940d42.chunk.js.LICENSE.txt"
+    "url": "/norris-jokes/static/js/2.3666e6f0.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "a2e94108a45f27a6952d",
-    "url": "/norris-jokes/static/js/main.4648dc2e.chunk.js"
+    "revision": "3037271131b8253ee56a",
+    "url": "/norris-jokes/static/js/main.40215a6c.chunk.js"
   },
   {
     "revision": "cd871a4c3d7e7ef839bb",
