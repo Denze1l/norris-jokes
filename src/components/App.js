@@ -1,10 +1,54 @@
 import React, { Component } from "react";
-// import ChosenJoke from "./ChosenJoke/chosenJoke";
 import axios from "axios";
 import heart from "../assets/icons/heart.svg";
 import warmHeart from "../assets/icons/like.svg";
 import styles from "./app.module.css";
 import Favorite from "./Favorite/Favorite";
+
+const circularIndicator = {
+  display: "inline-block",
+  width: "20px",
+  height: "20px",
+  borderRadius: "180px",
+  border: "2px solid var(--color-grey)",
+  position: "absolute",
+  left: "0px",
+};
+
+const insideCircular = {
+  display: "inline-block",
+  width: "9px",
+  height: "10px",
+  borderRadius: "180px",
+  backgroundColor: "var(--color-dark)",
+  position: "absolute",
+  left: "5px",
+  top: "6px",
+};
+
+const categoryButt = {
+  background: "none",
+  outline: "none",
+  border: "2px solid var(--color-lightGrey)",
+  borderRadius: "6px",
+  padding: "6px 15px",
+  cursor: "pointer",
+  fontFamily: "Roboto",
+  fontStyle: "normal",
+  fontWeight: "500",
+  fontSize: "12px",
+  lineHeight: "16px",
+  letterSpacing: "2px",
+  textTransform: "uppercase",
+  color: "var(--color-grey)",
+  marginBottom: "10px",
+  marginRight: "10px",
+};
+
+const activeCategoryButt = {
+  backgroundColor: "var(--color-lightGrey)",
+  color: "var(--color-dark)",
+};
 class App extends Component {
   state = {
     categoryButton: false,
@@ -17,19 +61,17 @@ class App extends Component {
     burgerActive: false,
     contentHeight: 0,
   };
-  // componentDidMount() {
-  //   const storageJokes = localStorage.getItem("favoriteJokes");
-  //   if (storageJokes) {
-  //     this.setState({ favoriteJokes: JSON.parse(storageJokes) });
-  //   }
-  // }
+  componentDidMount() {
+    const storageJokes = localStorage.getItem("favoriteJokes");
+    if (storageJokes) {
+      this.setState({ favoriteJokes: JSON.parse(storageJokes) });
+    }
+  }
 
   componentDidUpdate() {
     const { favoriteJokes, contentHeight } = this.state;
-    // if (favoriteJokes.length > 0) {}
     localStorage.setItem("favoriteJokes", JSON.stringify(favoriteJokes));
     let elHeight = document.getElementById("Contentdiv").clientHeight;
-    console.log(elHeight);
     if (elHeight !== contentHeight) {
       this.setState({ contentHeight: elHeight });
     }
@@ -48,7 +90,7 @@ class App extends Component {
       this.setState({ categoryButton: false, showInput: false });
     } else if (selectedOne === "button_2") {
       this.setState({ categoryButton: true, showInput: false });
-    } else {
+    } else if (selectedOne === "button_3") {
       this.setState({ showInput: true, categoryButton: false });
     }
     this.setState({ selectedOne: selectedOne });
@@ -57,8 +99,7 @@ class App extends Component {
     e.stopPropagation();
     let chosenCategory = e.target.id;
     let newCategory = `https://api.chucknorris.io/jokes/random?category=${chosenCategory}`;
-    this.setState({ newCategory });
-    console.log(chosenCategory);
+    this.setState({ newCategory, categoryWord: e.target.id });
   };
   handleChange = (e) => {
     let inputText = e.target.value;
@@ -123,14 +164,10 @@ class App extends Component {
         .get(jokeFromSearch)
         .then((response) => {
           for (let i = 0; i <= response.data.result.length; i++) {
-            console.log(response.data.result);
             let duplicate = foundJokes.find(
               (elem) => elem.id === response.data.result[i].id
             );
-            console.log(duplicate);
             if (duplicate === undefined) {
-              console.log(i);
-              console.log(response.data.result.length);
               let joke = response.data.result[i];
               this.jokeTime(joke);
               this.setState(({ foundJokes }) => ({
@@ -148,7 +185,7 @@ class App extends Component {
   likeTheJoke = (e) => {
     const { foundJokes } = this.state;
     let likedJoke = foundJokes.find((elem) => elem.id === e.currentTarget.id);
-    console.log(likedJoke);
+
     this.setState(({ favoriteJokes }) => ({
       favoriteJokes: [...favoriteJokes, likedJoke],
     }));
@@ -169,15 +206,16 @@ class App extends Component {
       favoriteJokes,
       burgerActive,
       contentHeight,
+      selectedOne,
+      categoryWord,
     } = this.state;
-
     const desktopWidth = 1440;
     const deviseWidth = document.documentElement.clientWidth;
     return (
       <div className={styles.mainDiv}>
         <div className={styles.contentDiv} id="Contentdiv">
           <p className={styles.headline}>MSI 2020</p>
-          {deviseWidth <= desktopWidth && (
+          {deviseWidth < desktopWidth && (
             <button
               type="button"
               className={
@@ -203,9 +241,40 @@ class App extends Component {
           <h2 className={styles.subtitle}>Let’s try to find a joke for you:</h2>
           <div className={styles.buttonsDiv} onClick={this.chosenButton}>
             <button className={styles.mainButtons} type="button" id="button_1">
+              <span
+                style={
+                  selectedOne === "button_1"
+                    ? {
+                        ...circularIndicator,
+                        border: "2px solid var(--color-dark)",
+                      }
+                    : {
+                        ...circularIndicator,
+                      }
+                }
+              />
+              {selectedOne === "button_1" && (
+                <span style={{ ...insideCircular }} />
+              )}
               Random
             </button>
+
             <button className={styles.mainButtons} type="button" id="button_2">
+              <span
+                style={
+                  selectedOne === "button_2"
+                    ? {
+                        ...circularIndicator,
+                        border: "2px solid var(--color-dark)",
+                      }
+                    : {
+                        ...circularIndicator,
+                      }
+                }
+              />
+              {selectedOne === "button_2" && (
+                <span style={{ ...insideCircular }} />
+              )}
               From categories
             </button>
             {categoryButton && (
@@ -214,38 +283,74 @@ class App extends Component {
                 onClick={this.ChooseTheCategory}
               >
                 <button
-                  className={styles.categoryButt}
+                  style={
+                    categoryWord === "animal"
+                      ? { ...categoryButt, ...activeCategoryButt }
+                      : { ...categoryButt, backgroundColor: "white" }
+                  }
                   type="button"
                   id="animal"
                 >
                   Animal
                 </button>
                 <button
-                  className={styles.categoryButt}
+                  style={
+                    categoryWord === "career"
+                      ? { ...categoryButt, ...activeCategoryButt }
+                      : { ...categoryButt, backgroundColor: "white" }
+                  }
                   type="button"
                   id="career"
                 >
                   Career
                 </button>
                 <button
-                  className={styles.categoryButt}
+                  style={
+                    categoryWord === "celebrity"
+                      ? { ...categoryButt, ...activeCategoryButt }
+                      : { ...categoryButt, backgroundColor: "white" }
+                  }
                   type="button"
                   id="celebrity"
                 >
                   Celebrity
                 </button>
-                <button className={styles.categoryButt} type="button" id="dev">
+                <button
+                  style={
+                    categoryWord === "dev"
+                      ? { ...categoryButt, ...activeCategoryButt }
+                      : { ...categoryButt, backgroundColor: "white" }
+                  }
+                  type="button"
+                  id="dev"
+                >
                   Dev
                 </button>
               </div>
             )}
             <button className={styles.mainButtons} type="button" id="button_3">
+              <span
+                style={
+                  selectedOne === "button_3"
+                    ? {
+                        ...circularIndicator,
+                        border: "2px solid var(--color-dark)",
+                      }
+                    : {
+                        ...circularIndicator,
+                      }
+                }
+              />
+              {selectedOne === "button_3" && (
+                <span style={{ ...insideCircular }} />
+              )}
               Search
             </button>
           </div>
           {showInput && (
             <div>
               <input
+                className={styles.typeInput}
                 onChange={this.handleChange}
                 value={inputText}
                 type="text"

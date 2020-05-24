@@ -9,14 +9,14 @@
     "axios": "^0.19.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
-    "gh-pages": "^2.2.0"
+    "react-scripts": "3.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
@@ -34,5 +34,8 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://denze1l.github.io/norris-jokes/"
+  "homepage": "https://denze1l.github.io/norris-jokes/",
+  "devDependencies": {
+    "gh-pages": "^2.2.0"
+  }
 }

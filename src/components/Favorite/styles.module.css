@@ -3,15 +3,15 @@
   background-color: var(--color-lightGrey);
   z-index: 5000;
   width: 100%;
-  margin-left: -40px;
+  margin-left: -20px;
 }
 
 .noJokes {
   font-family: Roboto;
   font-weight: 600;
   font-size: 24px;
-  line-height: 30px;
-  /* margin: 0 auto; */
+  line-height: 40px;
+  padding-top: 10px;
   text-align: center;
   color: var(--color-dark);
 }
@@ -30,6 +30,9 @@
   font-size: 20px;
   line-height: 28px;
   color: var(--color-grey);
+  position: absolute;
+  top: -79px;
+  right: 34px;
 }
 
 .chosenJoke {
@@ -148,11 +151,26 @@
   .chosenJoke:first-child {
     margin-top: 40px;
   }
+  .likedJokes {
+    margin-left: -40px;
+  }
 }
 @media (min-width: 1440px) {
   .likedJokes {
     position: static;
     width: 33%;
     padding: 40px;
+    margin: 0px;
+  }
+  .chosenJoke {
+    width: 400px;
+  }
+  .images {
+    margin-left: 310px;
+  }
+
+  .headline {
+    top: 30px;
+    right: 350px;
   }
 }

@@ -3,11 +3,14 @@ import warmHeart from "../../assets/icons/like.svg";
 import styles from "./styles.module.css";
 
 const Favorite = ({ favoriteJokes, dislikeTheJoke, contentHeight }) => {
-  console.log(contentHeight);
+  const desktopWidth = 1440;
+  const deviseWidth = document.documentElement.clientWidth;
+  const deviseHeight = document.documentElement.clientHeight;
+  console.log(deviseHeight);
   return (
     <div className={styles.likedJokes} style={{ height: contentHeight }}>
       <h1 className={styles.headline}>Favorite</h1>
-      {favoriteJokes.length > 0 ? (
+      {favoriteJokes.length > 0 && (
         <ul>
           {favoriteJokes.map((joke) => (
             <li key={joke.id} className={styles.chosenJoke}>
@@ -41,7 +44,8 @@ const Favorite = ({ favoriteJokes, dislikeTheJoke, contentHeight }) => {
             </li>
           ))}
         </ul>
-      ) : (
+      )}
+      {favoriteJokes.length === 0 && deviseWidth < desktopWidth && (
         <p className={styles.noJokes}>
           You have not liked any jokes yet &#x2639;{" "}
         </p>
