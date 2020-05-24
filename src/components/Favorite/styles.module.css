@@ -1,0 +1,158 @@
+.likedJokes {
+  position: absolute;
+  background-color: var(--color-lightGrey);
+  z-index: 5000;
+  width: 100%;
+  margin-left: -40px;
+}
+
+.noJokes {
+  font-family: Roboto;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 30px;
+  /* margin: 0 auto; */
+  text-align: center;
+  color: var(--color-dark);
+}
+
+.images {
+  width: 20px;
+  display: block;
+  cursor: pointer;
+  margin-left: 260px;
+}
+
+.headline {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+  color: var(--color-grey);
+}
+
+.chosenJoke {
+  border-radius: 20px;
+  background-color: white;
+  width: 320px;
+  padding: 20px;
+  list-style-type: none;
+  margin-bottom: 20px;
+}
+.chosenJoke:last-child {
+  margin-bottom: 50px;
+}
+
+.forID {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 14px;
+  color: var(--color-grey);
+  padding-bottom: 5px;
+  padding-left: 60px;
+}
+
+.forID::before {
+  background-repeat: no-repeat;
+  background-size: contain;
+  content: "";
+  display: block;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  border-radius: 360px;
+  margin-left: -60px;
+}
+
+.jokeLink {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+  padding-left: 5px;
+}
+
+.jokeValue {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 26px;
+  color: var(--color-dark);
+  padding-bottom: 28px;
+  padding-left: 60px;
+  position: relative;
+}
+
+.jokeValue::before {
+  background-repeat: no-repeat;
+  background-size: contain;
+  content: "";
+  display: block;
+  position: absolute;
+  width: 23px;
+  height: 23px;
+  margin-left: -51px;
+  margin-top: -12px;
+  background-image: url("../../assets/images/SMS-48_44567.png");
+}
+
+.updatedTime {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  padding-left: 60px;
+  font-size: 10px;
+  line-height: 14px;
+  color: var(--color-grey);
+  padding-bottom: 10px;
+}
+
+.jokeCategory {
+  background: #ffffff;
+  border-radius: 6px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 14px;
+  letter-spacing: 2px;
+  padding: 6px 20px;
+  text-transform: uppercase;
+  color: var(--color-dark);
+  display: inline-block;
+  margin-left: 60px;
+}
+
+@media (min-width: 836px) {
+  .headline {
+    position: absolute;
+    top: -80px;
+    right: 40px;
+  }
+  .chosenJoke {
+    padding: 40px;
+    width: 760px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    box-shadow: 0px 4px 2px 3px var(--color-grey);
+  }
+
+  .images {
+    margin-left: 660px;
+  }
+
+  .chosenJoke:first-child {
+    margin-top: 40px;
+  }
+}
+@media (min-width: 1440px) {
+  .likedJokes {
+    position: static;
+    width: 33%;
+    padding: 40px;
+  }
+}

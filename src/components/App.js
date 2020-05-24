@@ -4,6 +4,7 @@ import axios from "axios";
 import heart from "../assets/icons/heart.svg";
 import warmHeart from "../assets/icons/like.svg";
 import styles from "./app.module.css";
+import Favorite from "./Favorite/Favorite";
 class App extends Component {
   state = {
     categoryButton: false,
@@ -13,6 +14,8 @@ class App extends Component {
     newCategory: "",
     inputText: "",
     favoriteJokes: [],
+    burgerActive: false,
+    contentHeight: 0,
   };
   // componentDidMount() {
   //   const storageJokes = localStorage.getItem("favoriteJokes");
@@ -21,11 +24,23 @@ class App extends Component {
   //   }
   // }
 
-  // componentDidUpdate() {
-  //   const { favoriteJokes } = this.state;
-  //   // if (favoriteJokes.length > 0) {}
-  //   localStorage.setItem("favoriteJokes", JSON.stringify(favoriteJokes));
-  // }
+  componentDidUpdate() {
+    const { favoriteJokes, contentHeight } = this.state;
+    // if (favoriteJokes.length > 0) {}
+    localStorage.setItem("favoriteJokes", JSON.stringify(favoriteJokes));
+    let elHeight = document.getElementById("Contentdiv").clientHeight;
+    console.log(elHeight);
+    if (elHeight !== contentHeight) {
+      this.setState({ contentHeight: elHeight });
+    }
+  }
+
+  BurgerFunk = () => {
+    const { burgerActive } = this.state;
+    this.setState({
+      burgerActive: !burgerActive,
+    });
+  };
 
   chosenButton = (e) => {
     let selectedOne = e.target.id;
@@ -43,7 +58,7 @@ class App extends Component {
     let chosenCategory = e.target.id;
     let newCategory = `https://api.chucknorris.io/jokes/random?category=${chosenCategory}`;
     this.setState({ newCategory });
-    console.log(newCategory);
+    console.log(chosenCategory);
   };
   handleChange = (e) => {
     let inputText = e.target.value;
@@ -152,67 +167,102 @@ class App extends Component {
       foundJokes,
       inputText,
       favoriteJokes,
+      burgerActive,
+      contentHeight,
     } = this.state;
+
+    const desktopWidth = 1440;
+    const deviseWidth = document.documentElement.clientWidth;
     return (
-      <div>
-        <p className={styles.headline}>MSI 2020</p>
-        <h1 className={styles.hiLine}>Hey!</h1>
-        <h2 className={styles.subtitle}>Let’s try to find a joke for you:</h2>
-        <div className="buttonsDiv" onClick={this.chosenButton}>
-          <button type="button" id="button_1">
-            Random
-          </button>
-          <button type="button" id="button_2">
-            From categories
-          </button>
-          {categoryButton && (
-            <div onClick={this.ChooseTheCategory}>
-              <button type="button" id="animal">
-                Animal
-              </button>
-              <button type="button" id="career">
-                Career
-              </button>
-              <button type="button" id="celebrity">
-                Celebrity
-              </button>
-              <button type="button" id="dev">
-                Dev
-              </button>
+      <div className={styles.mainDiv}>
+        <div className={styles.contentDiv} id="Contentdiv">
+          <p className={styles.headline}>MSI 2020</p>
+          {deviseWidth <= desktopWidth && (
+            <button
+              type="button"
+              className={
+                burgerActive ? styles.burgerButtonActive : styles.burgerButton
+              }
+              onClick={this.BurgerFunk}
+            >
+              <span className={styles.burgerLines} />
+            </button>
+          )}
+          {burgerActive && (
+            <Favorite
+              favoriteJokes={favoriteJokes}
+              dislikeTheJoke={this.dislikeTheJoke}
+              contentHeight={contentHeight}
+            />
+          )}
+          {burgerActive === false && deviseWidth < desktopWidth && (
+            <p className={styles.burgerName}>Favorite</p>
+          )}
+
+          <h1 className={styles.hiLine}>Hey!</h1>
+          <h2 className={styles.subtitle}>Let’s try to find a joke for you:</h2>
+          <div className={styles.buttonsDiv} onClick={this.chosenButton}>
+            <button className={styles.mainButtons} type="button" id="button_1">
+              Random
+            </button>
+            <button className={styles.mainButtons} type="button" id="button_2">
+              From categories
+            </button>
+            {categoryButton && (
+              <div
+                className={styles.categoriesDiv}
+                onClick={this.ChooseTheCategory}
+              >
+                <button
+                  className={styles.categoryButt}
+                  type="button"
+                  id="animal"
+                >
+                  Animal
+                </button>
+                <button
+                  className={styles.categoryButt}
+                  type="button"
+                  id="career"
+                >
+                  Career
+                </button>
+                <button
+                  className={styles.categoryButt}
+                  type="button"
+                  id="celebrity"
+                >
+                  Celebrity
+                </button>
+                <button className={styles.categoryButt} type="button" id="dev">
+                  Dev
+                </button>
+              </div>
+            )}
+            <button className={styles.mainButtons} type="button" id="button_3">
+              Search
+            </button>
+          </div>
+          {showInput && (
+            <div>
+              <input
+                onChange={this.handleChange}
+                value={inputText}
+                type="text"
+                placeholder="Free text search..."
+              ></input>
             </div>
           )}
-          <button type="button" id="button_3">
-            Search
+          <button
+            className={styles.getButton}
+            type="button"
+            onClick={this.getTheJoke}
+          >
+            Get a joke
           </button>
-        </div>
-        {showInput && (
-          <div>
-            <input
-              onChange={this.handleChange}
-              value={inputText}
-              type="text"
-              placeholder="Free text search..."
-            ></input>
-          </div>
-        )}
-        <button type="button" onClick={this.getTheJoke}>
-          Get a joke
-        </button>
-        <ul className="chosenJoke">
-          {foundJokes.map((joke) => (
-            <li key={joke.id}>
-              <p className="forID">
-                ID:
-                <a
-                  href={`https://api.chucknorris.io/jokes/${joke.id}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {joke.id}
-                </a>
-              </p>
-              <div>
-                {/* favoriteJokes.find((elem) => elem.id === joke.id)  */}
+          <ul className={styles.JokesList}>
+            {foundJokes.map((joke) => (
+              <li key={joke.id} className={styles.chosenJoke}>
                 {favoriteJokes.find((elem) => elem.id === joke.id) ? (
                   <img
                     onClick={this.dislikeTheJoke}
@@ -230,72 +280,39 @@ class App extends Component {
                     alt="like"
                   />
                 )}
-              </div>
-              <p>{joke.value}</p>
-              <div>
-                <p>Last update: {joke.hoursPast} hours ago</p>
-                {joke.categories && <p>{joke.categories}</p>}
-              </div>
-            </li>
-          ))}
-        </ul>
-        <div>
-          <h1>Favorite</h1>
-          {favoriteJokes.map((joke) => (
-            <li key={joke.id}>
-              <p className="forID">
-                ID:
-                <a
-                  href={`https://api.chucknorris.io/jokes/${joke.id}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {joke.id}
-                </a>
-              </p>
-              <div>
-                <img
-                  id={joke.id}
-                  onClick={this.dislikeTheJoke}
-                  src={warmHeart}
-                  className={styles.images}
-                  alt="dislike"
-                />
-              </div>
-              <p>{joke.value}</p>
-              <div>
-                <p>Last update: {joke.hoursPast} hours ago</p>
-                {joke.categories && <p>{joke.categories}</p>}
-              </div>
-            </li>
-          ))}
+                <p className={styles.forID}>
+                  ID:
+                  <a
+                    href={`https://api.chucknorris.io/jokes/${joke.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.jokeLink}
+                  >
+                    {joke.id}
+                  </a>
+                </p>
+                <p className={styles.jokeValue}>{joke.value}</p>
+                <div>
+                  <p className={styles.updatedTime}>
+                    Last update: {joke.hoursPast} hours ago
+                  </p>
+                  {joke.categories.length > 0 && (
+                    <p className={styles.jokeCategory}>{joke.categories}</p>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
+        {deviseWidth >= desktopWidth && (
+          <Favorite
+            favoriteJokes={favoriteJokes}
+            dislikeTheJoke={this.dislikeTheJoke}
+          />
+        )}
       </div>
     );
   }
 }
 
 export default App;
-
-// rateTheJoke = (e) => {
-//   const { favoriteJokes, foundJokes } = this.state;
-//   let likedJoke = foundJokes.find((elem) => elem.id === e.currentTarget.id);
-//   console.log(likedJoke.liked);
-//   if (likedJoke.liked) {
-//     likedJoke.liked = false;
-//     console.log("hello");
-//     let index = favoriteJokes.indexOf(likedJoke);
-//     // console.log(index);
-//     // console.log(favoriteJokes.splice(index, 1));
-//     // console.log(likedJoke.id);
-//     // console.log(favoriteJokes.filter((elem) => elem.id !== likedJoke.id));
-//     return this.setState((prevState) => {
-//       prevState.favoriteJokes.splice(index, 1);
-//     });
-//   } else if (!likedJoke.liked) {
-//     console.log("hi");
-//     likedJoke.liked = true;
-//     this.setState(({ favoriteJokes }) => ({
-//       favoriteJokes: [...favoriteJokes, likedJoke],
-//     }));
-//   }

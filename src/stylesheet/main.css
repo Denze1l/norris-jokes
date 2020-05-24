@@ -1,10 +1,8 @@
 @import "./libs/normalize.css";
 @import "./vars.css";
 
-html {
-  box-sizing: border-box;
-}
-
-p {
-  --main-color: pink;
+h1,
+h2,
+button {
+  color: var(--color-dark);
 }

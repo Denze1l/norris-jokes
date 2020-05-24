@@ -1,7 +1,23 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+.contentDiv {
+  padding: 20px;
+  height: auto;
+  position: relative;
+}
 .images {
-  width: 24px;
+  width: 20px;
   display: block;
   cursor: pointer;
+  margin-left: 260px;
 }
 
 .headline {
@@ -12,9 +28,82 @@
   font-weight: bold;
   font-size: 20px;
   line-height: 28px;
-  color: var(-color-dark);
+  color: var(--color-dark);
+  padding-bottom: 78px;
 }
 
+/* FAVORITES BURGER  */
+.burgerButton,
+.burgerButtonActive {
+  position: absolute;
+  outline: none;
+  width: 40px;
+  height: 38px;
+  border-radius: 180px;
+  border: 2px solid white;
+  display: block;
+  background-color: var(--color-dark);
+  right: 116px;
+  top: 15px;
+  z-index: 10;
+}
+
+.burgerName {
+  position: absolute;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+  color: var(--color-grey);
+  top: 20px;
+  right: 34px;
+}
+
+/* .burgerLines, */
+
+.burgerLines::after,
+.burgerLines::before {
+  position: absolute;
+  width: 22px;
+  height: 3px;
+  background-color: white;
+}
+
+.burgerLines {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.burgerLines::before {
+  content: "";
+  top: 10px;
+  left: 6px;
+}
+
+.burgerLines::after {
+  content: "";
+  top: 20px;
+  left: 6px;
+}
+
+.burgerButtonActive .burgerLines {
+  background-color: transparent;
+}
+
+.burgerButtonActive .burgerLines::before {
+  top: 14px;
+  left: 6px;
+  transform: rotate(45deg);
+}
+.burgerButtonActive .burgerLines::after {
+  top: 14px;
+  left: 6px;
+  transform: rotate(-45deg);
+}
+
+/* SEARCH BUTTONS */
 .hiLine {
   font-family: Roboto;
   font-style: normal;
@@ -26,7 +115,229 @@
 .subtitle {
   font-family: Roboto;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 24px;
   line-height: 44px;
+  padding-bottom: 43px;
+}
+
+.buttonsDiv {
+  display: flex;
+  flex-direction: column;
+}
+
+.mainButtons {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 26px;
+  padding-left: 35px;
+  text-align: left;
+  background: none;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.mainButtons:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.mainButtons:last-child {
+  margin-bottom: 20px;
+}
+
+.categoriesDiv {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.categoryButt {
+  background: none;
+  outline: none;
+  border: 2px solid var(--color-lightGrey);
+  border-radius: 6px;
+  padding: 6px 15px;
+  cursor: pointer;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-grey);
+  margin-bottom: 10px;
+}
+
+.categoryButt:active {
+  background-color: var(--color-lightGrey);
+  color: var(--color-dark);
+}
+
+.categoryButt:not(:last-child) {
+  margin-right: 10px;
+}
+
+.getButton {
+  background: linear-gradient(92.01deg, #8ea7ff 0%, #7291ff 100%);
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  width: 152px;
+  height: 42px;
+  font-weight: bold;
+  color: white;
+  font-size: 17px;
+}
+
+.getButton:hover {
+  background: white;
+  color: #7291ff;
+  border: #7291ff 2px solid;
+}
+
+.getButton:active {
+  box-shadow: 0px 0px 5px 3px #7291ff;
+}
+
+/* Chosen JOKES */
+.chosenJoke {
+  border-radius: 20px;
+  background-color: var(--color-lightGrey);
+  width: 320px;
+  padding: 20px;
+  list-style-type: none;
+  margin-bottom: 20px;
+}
+.chosenJoke:last-child {
+  margin-bottom: 50px;
+}
+
+.forID {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 14px;
+  color: var(--color-grey);
+  padding-bottom: 5px;
+  padding-left: 60px;
+}
+
+.forID::before {
+  background-repeat: no-repeat;
+  background-size: contain;
+  content: "";
+  display: block;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  border-radius: 360px;
+  margin-left: -60px;
+}
+
+.jokeLink {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+  padding-left: 5px;
+}
+
+.jokeValue {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 26px;
+  color: var(--color-dark);
+  padding-bottom: 28px;
+  padding-left: 60px;
+  position: relative;
+}
+
+.jokeValue::before {
+  background-repeat: no-repeat;
+  background-size: contain;
+  content: "";
+  display: block;
+  position: absolute;
+  width: 23px;
+  height: 23px;
+  margin-left: -51px;
+  margin-top: -12px;
+  background-image: url("../assets/images/SMS-48_44567.png");
+}
+
+.updatedTime {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  padding-left: 60px;
+  font-size: 10px;
+  line-height: 14px;
+  color: var(--color-grey);
+  padding-bottom: 10px;
+}
+
+.jokeCategory {
+  background: #ffffff;
+  border-radius: 6px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 14px;
+  letter-spacing: 2px;
+  padding: 6px 20px;
+  text-transform: uppercase;
+  color: var(--color-dark);
+  display: inline-block;
+  margin-left: 60px;
+}
+
+.JokesList {
+  padding-top: 40px;
+}
+
+@media (min-width: 836px) {
+  .contentDiv {
+    padding: 40px;
+  }
+  .burgerButton,
+  .burgerButtonActive {
+    top: 35px;
+    right: 134px;
+  }
+  .burgerName {
+    top: 38px;
+    right: 40px;
+  }
+  .chosenJoke {
+    padding: 40px;
+    width: 760px;
+    margin-bottom: 20px;
+    box-shadow: 0px 4px 2px 3px var(--color-grey);
+  }
+
+  .images {
+    margin-left: 660px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .mainDiv {
+    display: flex;
+    width: 100%;
+  }
+  .contentDiv {
+    /* padding: 0px 140px; */
+    width: 67%;
+    padding: 40px 140px;
+  }
 }
