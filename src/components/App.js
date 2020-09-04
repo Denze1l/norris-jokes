@@ -118,6 +118,7 @@ class App extends Component {
     joke.hoursPast = hoursPast;
   }
 
+  // here we get the category and the joke that user chose
   getTheJoke = () => {
     const { selectedOne, newCategory, jokeFromSearch, foundJokes } = this.state;
 
@@ -182,6 +183,7 @@ class App extends Component {
         );
     }
   };
+  // this method choose the joke that user likes
   likeTheJoke = (e) => {
     const { foundJokes } = this.state;
     let likedJoke = foundJokes.find((elem) => elem.id === e.currentTarget.id);
@@ -190,6 +192,7 @@ class App extends Component {
       favoriteJokes: [...favoriteJokes, likedJoke],
     }));
   };
+  // this method delete from array favoriteJokes  the joke that user dislike
   dislikeTheJoke = (e) => {
     let dislike = e.currentTarget.id;
     this.setState(({ favoriteJokes }) => ({

@@ -2,6 +2,7 @@ import React from "react";
 import warmHeart from "../../assets/icons/like.svg";
 import styles from "./styles.module.css";
 
+// here we take users favorite jokes and draw them in this element
 const Favorite = ({ favoriteJokes, dislikeTheJoke, contentHeight }) => {
   const desktopWidth = 1440;
   const deviseWidth = document.documentElement.clientWidth;
